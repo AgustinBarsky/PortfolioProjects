@@ -11,14 +11,14 @@ ORDER BY 3,4;
 
 --------------------------------------------
 
---Observamos todos los países que se encuentran en nuestro dataset
+--Observamos todos los paÃ­ses que se encuentran en nuestro dataset
 
 SELECT DISTINCT(location) FROM CovidDeaths
 ORDER BY location;
 
 --------------------------------------------
 
---Observamos la fecha del primer y del último registro
+--Observamos la fecha del primer y del Ãºltimo registro
 
 SELECT DISTINCT(date) FROM CovidDeaths
 ORDER BY date;
@@ -28,7 +28,7 @@ FROM CovidDeaths;
 
 --------------------------------------------
 
---Población por país
+--PoblaciÃ³n por paÃ­s
 
 SELECT DISTINCT(location), population
 FROM CovidDeaths;
@@ -62,31 +62,31 @@ ORDER BY location, date;
 
 -- Casos y muertes totales en Argentina
 
-SELECT 'Argentina' País, MAX(total_deaths) total_deaths, MAX(total_cases) total_cases, 
+SELECT 'Argentina' PaÃ­s, MAX(total_deaths) total_deaths, MAX(total_cases) total_cases, 
 ((MAX(total_deaths)/MAX(total_cases))*100) percentaje_death
 FROM dbo.CovidDeaths
 WHERE location = 'Argentina';
 
 
 --total_cases / population
---Impresionante! un 18% del país, contrajo Covid
+--Impresionante! un 18% del paÃ­s, contrajo Covid
 
-SELECT 'Argentina' País, MAX(total_deaths) total_deaths, MAX(total_cases) total_cases, 
+SELECT 'Argentina' PaÃ­s, MAX(total_deaths) total_deaths, MAX(total_cases) total_cases, 
 ((MAX(total_deaths)/MAX(total_cases))*100) percentaje_death, (((MAX(total_cases))/MAX(population))*100) cases_population
 FROM dbo.CovidDeaths
 WHERE location = 'Argentina';
 
--- el 0,268% de la población argentina, falleció a causa del Covid
+-- El 0,268% de la poblaciÃ³n argentina, falleciÃ³ a causa del Covid
 
-SELECT 'Argentina' País, MAX(total_deaths) total_deaths, MAX(total_cases) total_cases, 
+SELECT 'Argentina' PaÃ­s, MAX(total_deaths) total_deaths, MAX(total_cases) total_cases, 
 ((MAX(total_deaths)/MAX(total_cases))*100) percentaje_death, (((MAX(total_deaths))/MAX(population))*100) deaths_population
 FROM dbo.CovidDeaths
 WHERE location = 'Argentina';
 
 --------------------------------------------
 
--- Veamos cual es el país que mas casos/población tuvo
--- Increíble. En Andorra, la mitad de su población contrajo Covid 19
+-- Veamos cual es el paÃ­s que mas casos/poblaciÃ³n tuvo
+-- IncreÃ­ble. En Andorra, la mitad de su poblaciÃ³n contrajo Covid 19
 
 SELECT location, population, MAX(total_deaths) total_deaths, MAX(total_cases) total_cases, 
 ((MAX(total_deaths)/MAX(total_cases))*100) percentaje_death, (((MAX(total_cases))/MAX(population))*100) cases_population
@@ -94,7 +94,7 @@ FROM dbo.CovidDeaths
 GROUP BY location, population
 ORDER BY 6 DESC;
 
--- Siguiendo con el análisis, me pareción interesante agregar un Ranking.
+-- Siguiendo con el anÃ¡lisis, me pareciÃ³n interesante agregar un Ranking.
 
 SELECT RANK() OVER (ORDER BY (((MAX(total_cases))/MAX(population))*100) DESC) Ranking, location, population, 
 MAX(total_deaths) total_deaths,  MAX(total_cases) total_cases, ((MAX(total_deaths)/MAX(total_cases))*100) percentaje_death, 
@@ -114,7 +114,7 @@ SELECT * FROM dbo.CovidVaccinations
 -- y la cantidad de personas completamente vacunadas
 -- Resultados:
 -- 1) se suministraron un total de 89.915.714 vacunas
--- 2) se vacunó a 39.829.143 personas
+-- 2) se vacunÃ³ a 39.829.143 personas
 -- 3) 35072.121 personas se encuentran totalmente vacunadas 
 
 SELECT location, date, total_vaccinations, people_vaccinated, people_fully_vaccinated FROM dbo.CovidVaccinations
@@ -139,7 +139,7 @@ AND CovDe.date = CovVA.date
 WHERE CovDe.continent IS NOT NULL
 ORDER BY CovDe.location, CovDe.date;
 
--- Volvamos a ver a Argentina
+-- Volvamos a ver analizar a Argentina
 
 SELECT CovDe.location, CovDe.date, CovDe.population, CovDe.total_cases, CovDe.total_deaths,
 CovVa.total_vaccinations, CovVa.people_vaccinated, CovVa.people_fully_vaccinated 
@@ -151,10 +151,10 @@ WHERE CovDe.continent IS NOT NULL
 AND CovDe.location = 'Argentina'
 ORDER BY CovDe.date DESC;
 
--- Porcentaje de population vacunada, y totalmente vacunada
+-- Porcentaje de poblaciÃ³n vacunada, y totalmente vacunada
 -- Resultados:
--- 1) el 87,3% de la población argentina se encuentra vacunada
--- 2) el 76,9% de la población argentina se encuentra totalmente vacunada
+-- 1) el 87,3% de la poblaciÃ³n argentina se encuentra vacunada
+-- 2) el 76,9% de la poblaciÃ³n argentina se encuentra totalmente vacunada
 
 SELECT CovDe.location, CovDe.date, CovDe.population,
 (((CAST(CovVa.people_vaccinated AS NUMERIC))/CovDe.population)*100) percentaje_people_vaccinated,
@@ -169,7 +169,7 @@ ORDER BY date DESC;
 
 --------------------------------------------
 
--- Continuando, vamos a proceder a crear una vista de la última consulta, para poder
+-- Continuando, vamos a proceder a crear una vista de la Ãºltima consulta, para poder
 -- visualizarla cuando lo necesitemos
 
 CREATE VIEW PercentajesPeopleVaccinatedAndFullyVaccinated AS
